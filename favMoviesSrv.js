@@ -4,7 +4,7 @@ app.factory('favMoviesSrv', function($http, $log, $q, convertService) {
     console.log(test);
     
     var API_KEY = "ddce1bf04c2fe2731b0ba5290fd7c795";
-    console.log(API_KEY);
+    
 
     var tempResults = [];
    
@@ -18,9 +18,7 @@ app.factory('favMoviesSrv', function($http, $log, $q, convertService) {
     
           $http.get(searchUrl).then(function (response) {
             tempResults = response.data.results;
-            console.log(tempResults);
             async.resolve(tempResults);
-          //  poster = "https://image.tmdb.org/t/p/w200" + tempResults.poster_path;
             
           },
             function (error) {
