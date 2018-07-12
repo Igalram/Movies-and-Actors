@@ -5,7 +5,34 @@ app.factory('favMoviesSrv', function($http, $log, $q, convertService) {
     
     var API_KEY = "ddce1bf04c2fe2731b0ba5290fd7c795";
     console.log(API_KEY);
+
+    var tempResults = [];
    
+
+    getResults = function (query) {
+        var async = $q.defer();
+        if (query) {
+          var searchUrl = "https://api.themoviedb.org/3/search/movie?api_key=" +
+            API_KEY + "&language=en-US&query=" + encodeURIComponent(query) +
+            "&page=1&include_adult=false";
+    
+          $http.get(searchUrl).then(function (response) {
+            tempResults = response.data.results;
+            console.log(tempResults);
+            async.resolve(tempResults);
+          //  poster = "https://image.tmdb.org/t/p/w200" + tempResults.poster_path;
+            
+          },
+            function (error) {
+              console.error(error);
+              async.reject("failed to movies results");
+            })
+        } else {
+          tempResults = [];
+        }
+        return async.promise;
+      }
+
 
 //show current favs in movies arr
 
@@ -47,8 +74,8 @@ app.factory('favMoviesSrv', function($http, $log, $q, convertService) {
       function (error) {
         console.error(error);
       })
-    $scope.tempResults = [];
-    $scope.query = "";
+    tempResults = [];
+    query = "";
 
   }
 
@@ -57,8 +84,8 @@ app.factory('favMoviesSrv', function($http, $log, $q, convertService) {
   
        
     return {
-         API_KEY :  API_KEY
-
+         getResults : getResults,
+         getMovie : getMovie, 
           }
 
 });
