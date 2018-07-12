@@ -50,12 +50,13 @@ app.factory('favMoviesSrv', function($http, $log, $q, convertService) {
 
     
   getMovie = function (result) {
+    var async = $q.defer();
+
     var id = "";
     console.log(result.id);
     var tempMovieObj;
     id = result.id;
-    var getMovieUrl = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" +
-      $scope.API_KEY + "&language=en-US";
+    var getMovieUrl = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + API_KEY + "&language=en-US";
 
     $http.get(getMovieUrl).then(function (response) {
       tempMovieObj = response.data.title;
@@ -67,14 +68,19 @@ app.factory('favMoviesSrv', function($http, $log, $q, convertService) {
         response.data.id);
 
       movies.push(movie);
+      async.resolve(movie);
+
 
     },
       function (error) {
         console.error(error);
+        async.reject("failed to add movie to favorites");
+
       })
     tempResults = [];
     query = "";
-
+    return async.promise;
+  
   }
 
 
@@ -83,7 +89,8 @@ app.factory('favMoviesSrv', function($http, $log, $q, convertService) {
        
     return {
          getResults : getResults,
-         getMovie : getMovie, 
+         getMovie : getMovie,
+         movies: movies 
           }
 
 });
