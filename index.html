@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html ng-app="MoviesApp">
+
+<head>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+  <script src="convert.js"></script>
+  <script src="favMoviesSrv.js"></script>
+  <script src="MoviesCtrl.js"></script>
+  <script src="MoviesDirective.js"></script>
+
+
+
+</head>
+
+
+<body>
+
+
+  <div class="container" ng-controller="moviesCtrl">
+
+    <div class="jumbotron">
+      <h1>Movies</h1>
+
+
+
+
+
+      <div class="form-row">
+        <div class="form-group">
+
+          <label for="search">Search:</label>
+          <input type="text" ng-model="query" placeholder="search text" ng-change="getResults()">
+
+
+
+          <div id="search-results">
+            <movies-directive></movies-directive>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="main">
+      <div class="row">
+        
+
+
+
+        <div class="col col-12 col-sm-6 col-md-3" ng-repeat="movie in movies">
+          <!-- | filter:criteriaMatch | orderBy:order -->
+
+          <div class="card" ng-click="setSelected(movie)" ng-class="{'border-primary': actor === movieSelected}" ></div> 
+
+            <img class="card-img-top" src="{{movie.poster}}" alt="Card image cap"> 
+            <div class="card-body">
+              <h5 class="card-title">{{movie.name}}</h5>
+              
+              <p class="card-text">{{movie.length}}</p>
+              <p class="card-text">{{movie.snippet}}</p>
+              <a href="{{movie.imdb}}" class="btn btn-primary">imdb</a>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <!--
+
+    <div class="row">
+
+
+
+      <div class="col col-12 col-sm-6 col-md-3" ng-repeat="actor in actors | filter:criteriaMatch | orderBy:order">
+
+        <div class="card" ng-click="setSelected(actor)" ng-class="{'border-primary': actor === actorSelected}">
+
+          <img class="card-img-top" src="{{actor.imgURL}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{actor.name}}</h5>
+            <p class="card-text">{{actor.age | date }}</p>
+            <a href="{{actor.url}}" class="btn btn-primary">imdb</a>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+-->
+
+</body>
+
+</html>

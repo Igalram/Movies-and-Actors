@@ -1,0 +1,15 @@
+<div class="list-group">
+
+  <div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action" ng-repeat="result in tempResults" ng-click="getMovie(result)">
+
+      <h5>{{result.title}}</h5>
+      <img ng-src="{{'https://image.tmdb.org/t/p/w200' + result.poster_path}}" class="img-thumbnail ">  
+      <span>{{wordRate(result.vote_average)}}</span>
+     
+    </a>
+  </div>
+
+
+
+</div>
